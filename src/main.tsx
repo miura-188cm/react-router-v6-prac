@@ -15,12 +15,15 @@ const router = createBrowserRouter([
   {
     path: '/',
     element: <Root />,
-    errorElement: <ErrorPage />
+    errorElement: <ErrorPage />,
+    children: [
+      {
+        path: 'contacts/:contactsId',
+        element: <Contact />
+      }
+    ]
   },
-  {
-    path: 'contacts/:contactsId',
-    element: <Contact />
-  }
+
 ])
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
