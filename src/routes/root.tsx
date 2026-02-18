@@ -1,5 +1,23 @@
-import { Outlet, Link } from "react-router-dom";
+import {
+  Outlet,
+  Link,
+  useLoaderData,
+  Form
+} from "react-router-dom";
+import { getContacts } from "../type";
+import type { Contact } from "../type";
+
+export async function loader(): Promise<{ contacts: Contact[] }> {
+  const contacts = [...getContacts]
+  return { contacts }
+}
+
+export async function action() {
+  return { id: 'test', createdAt: 20260327 };
+}
+
 export default function Root() {
+  const contacts = useLoaderData() as { contacts: Contact[] }
   return (
     <>
       <div id="sidebar">
@@ -23,19 +41,33 @@ export default function Root() {
               aria-live="polite"
             ></div>
           </form>
-          <form method="post">
-            <button type="submit">New</button>
-          </form>
+          <Form >
+            <button type='submit'>New</button>
+          </Form>
         </div>
         <nav>
-          <ul>
-            <li>
-              <Link to={`/contacts/1`}>Your Name</Link>
-            </li>
-            <li>
-              <a href={`/contacts/2`}>Your Friend</a>
-            </li>
-          </ul>
+          {contacts.contacts ? (
+            <ul>
+              {contacts.contacts.map((contact) => (
+                <li key={contact.last}>
+                  <Link to={`contacts/${contact}`}>
+                    {contact.first || contact.last ? (
+                      <>
+                        {contact.first} {contact.last}
+                      </>
+                    ) : (
+                      <i>No Name</i>
+                    )}{" "}
+                    {contact.favorite && <span>★</span>}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <p>
+              <i>No contacts</i>
+            </p>
+          )}
         </nav>
       </div>
       <div id="detail">
