@@ -2,7 +2,8 @@ import {
   Outlet,
   Link,
   useLoaderData,
-  Form
+  Form,
+  useNavigation,
 } from "react-router-dom";
 import { getContacts } from "../type";
 import type { Contact } from "../type";
@@ -18,6 +19,7 @@ export async function action() {
 
 export default function Root() {
   const contacts = useLoaderData() as { contacts: Contact[] }
+  const navigation = useNavigation();
   return (
     <>
       <div id="sidebar">
@@ -68,9 +70,17 @@ export default function Root() {
               <i>No contacts</i>
             </p>
           )}
+          <Link to='test'>Test</Link>
         </nav>
       </div>
-      <div id="detail">
+      <div
+        id="detail"
+        className={
+          navigation.state === "loading" ? "loading" : ""
+        }>
+          {navigation.state === 'loading' && <p>Loading!!!</p>}
+          {navigation.state === 'idle' && <p>idle</p>}
+          {navigation.state === 'submitting' && <p>submitting</p>}
         <Outlet />
       </div>
     </>
