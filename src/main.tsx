@@ -12,6 +12,7 @@ import ErrorPage from './error-page';
 import Contact from './routes/Contact';
 import Root, { loader as rootLoader, action as rootAction } from './routes/root';
 import Test, { loader as testLoader } from './routes/Test';
+import Index from './routes/Index';
 
 const router = createBrowserRouter([
   {
@@ -29,6 +30,10 @@ const router = createBrowserRouter([
         path: 'test',
         element: <Test />,
         loader: testLoader,
+      },
+      {
+        index: true,
+        element: <Index />
       }
     ]
   },
