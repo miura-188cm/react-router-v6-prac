@@ -1,4 +1,4 @@
-import { Form } from "react-router-dom";
+import { Form, useNavigate } from "react-router-dom";
 
 type Contact = {
   first: string;
@@ -17,6 +17,7 @@ export default function Contact() {
     notes: "Some notes",
     favorite: true,
   };
+  const navigate = useNavigate();
 
   return (
     <div id="contact">
@@ -73,6 +74,14 @@ export default function Contact() {
             }}
           >
             <button type="submit">Delete</button>
+            <button
+              type="button"
+              onClick={() => {
+                navigate(-1);
+              }}
+            >
+              Cancel
+            </button>
           </Form>
         </div>
       </div>
