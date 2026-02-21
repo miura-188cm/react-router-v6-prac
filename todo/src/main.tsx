@@ -4,6 +4,8 @@ import './index.css'
 import App, { loader as appLoader } from './App.tsx'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import ProjectList, { loader as projectLoader } from './page/project/ProjectList.tsx'
+import Project from './page/project/id/Project.tsx'
+import ProjectNotFound from './page/project/id/ProjectNotFound.tsx'
 
 const router = createBrowserRouter([
   {
@@ -14,8 +16,14 @@ const router = createBrowserRouter([
   {
     path: 'project/',
     element: <ProjectList />,
-    loader: projectLoader
+    loader: projectLoader,
 
+  },
+  {
+    path: 'project/:projectId',
+    element: <Project />,
+    loader: appLoader,
+    errorElement: <ProjectNotFound />
   }
 ])
 

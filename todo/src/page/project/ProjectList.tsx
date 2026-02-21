@@ -14,7 +14,7 @@ export default function ProjectList() {
       {projects.map(p => {
         return (
           <div>
-            <Link to={p.title} key={p.id}>{p.title}</Link>
+            <Link to={p.id} key={p.id}>{p.title}</Link>
           </div>
         )
       })}
