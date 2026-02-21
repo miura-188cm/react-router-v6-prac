@@ -1,0 +1,9 @@
+version: '3'
+services:
+  app:
+    build: .
+    tty: true
+    volumes: 
+      - .:/project # パスはWORKDIRの記述と揃えるのがおすすめ
+    ports:
+      - 3000:3000
