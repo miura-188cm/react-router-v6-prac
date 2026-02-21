@@ -1,9 +1,14 @@
 services:
-  app:
+  todo-router:
     image: node:24
     working_dir: /app
     volumes:
       - .:/app
+      - node_modules:/app/node_modules
     ports:
       - "5173:5173"
-    command: sh -c "npm i && npm run dev -- --host"
+    command: npm run dev -- --host
+    tty: true
+
+volumes:
+  node_modules:

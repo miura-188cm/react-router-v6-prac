@@ -8,8 +8,8 @@
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "npm:install": " npm i",
-    "docker:up": "docker compose up -d",
+    "npm:install": " docker compose run --rm todo-router npm install",
+    "docker:up": "docker compose up",
     "docker:down": "docker compose down",
     "docker:node": "docker compose exec app sh",
     "docker:ps": "docker ps"
@@ -26,12 +26,12 @@
     "@types/react": "18.3.1",
     "@types/react-dom": "18.3.1",
     "@vitejs/plugin-react": "^5.1.1",
-    "eslint": "^10.0.0",
+    "eslint": "^9.39.1",
     "eslint-plugin-react-hooks": "^7.0.1",
     "eslint-plugin-react-refresh": "^0.4.24",
     "globals": "^16.5.0",
     "typescript": "~5.9.3",
-    "typescript-eslint": "^8.36.0",
+    "typescript-eslint": "^8.48.0",
     "vite": "^7.3.1"
   }
 }
