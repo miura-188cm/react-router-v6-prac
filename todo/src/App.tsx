@@ -1,18 +1,20 @@
 import { useAtom } from 'jotai'
-import { todoAtom } from './state'
+import { projectAtom } from './state'
+import { lazyLoad } from './lazyLoad'
 import './App.css'
 
-
+export const loader = async () => {
+  return await lazyLoad()
+}
 function App() {
-  const [todos,] = useAtom(todoAtom)
+  const [projects,] = useAtom(projectAtom)
   return (
     <div>
       <h1>Test</h1>
-      {todos.map(t => {
+      {projects.map(p => {
         return (
-          <div key={t.id}>
-            <p>{t.title}</p>
-            <p>{t.due.toISOString()}</p>
+          <div>
+            <p key={p.id}>{p.title}</p>
           </div>
         )
       })}
