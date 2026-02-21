@@ -1,6 +1,13 @@
 export type Todo = {
-  id: string
+  projectId: string
+  todoId: string
   title: string
   due: Date
-  created_at: Date
+  createdAt: Date
+}
+
+export type Project = {
+  id: string
+  title: string
+  createdAt: Date
 }
