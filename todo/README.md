@@ -1,73 +1,138 @@
-# React + TypeScript + Vite
+# React Router v6 学習構成
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## 全体構成
 
-Currently, two official plugins are available:
-
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
-
-## React Compiler
-
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```
+RootLayout
+ ├─ Dashboard
+ ├─ ProjectsLayout
+ │   ├─ ProjectList (index)
+ │   ├─ ProjectNew
+ │   └─ ProjectDetailLayout
+ │        ├─ ProjectOverview (index)
+ │        ├─ ProjectEdit
+ │        └─ TasksLayout
+ │             ├─ TaskList (index)
+ │             ├─ TaskDetail
+ │             └─ TaskEdit
+ ├─ Settings
+ └─ NotFound
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## ① トップ階層
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+`/`
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+`/projects`
+
+`/settings`
+
+`*（404）`
+
+ここで学ぶ：
+
+`index route`
+
+`not found`
+
+`layout共通化`
+
+## ② プロジェクト階層
+
+`/projects`
+
+`/projects/new`
+
+`/projects/:projectId`
+
+`/projects/:projectId/edit`
+
+ここで学ぶ：
+
+`dynamic param`
+
+`relative link`
+
+`親レイアウト保持`
+
+`詳細と編集の切り替え`
+
+## ③ タスク階層（ネスト3段）
+
+`/projects/:projectId/tasks`
+
+`/projects/:projectId/tasks/:taskId`
+
+`/projects/:projectId/tasks/:taskId/edit`
+
+ここで学ぶ：
+
+`深いネスト`
+
+`複数param取得`
+
+`Outletの重なり`
+
+`relative navigation`
+
+## 追加で必ず入れるもの
+
+1. URLフィルタ  
+`/projects/:projectId/tasks?status=done&sort=due`
+
+学ぶ：
+
+`useSearchParams`
+
+`URLを状態源にする設計`
+
+1. タブUIをルートで表現  
+`/projects/:projectId`  
+`　├ overview`  
+`　├ analytics`  
+`　└ settings`
+
+学ぶ：
+
+`index route`
+
+`子ルートでタブ管理`
+
+`相対リンク`
+
+1. モーダルをルートで制御  
+`/tasks/:taskId?modal=true`
+
+または `background location` パターン。
+
+これができればRouter理解は一段上です。
+
+## この構成で習得できる範囲
+
+`Nested Routes`
+
+`Layout Route`
+
+`Outlet`
+
+`Dynamic Segment`
+
+`Index Route`
+
+`Relative Path`
+
+`URL State`
+
+`404処理`
+
+`階層的UI設計`
+
+## やるべき制約
+
+`状態はできる限りURLに寄せる`
+
+`親レイアウトは絶対崩さない`
+
+`navigateは相対パス中心で使う`
+
+`深さ3以上のネストを必ず作る`
