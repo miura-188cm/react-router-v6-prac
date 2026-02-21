@@ -1,11 +1,21 @@
 import { atom } from "jotai"
-import type { Todo } from "./type"
+import type { Todo, Project } from "./type"
 const todos: Todo[] = [
   {
-    id: 'test',
-    title: 'first',
+    projectId: 'test',
+    todoId: 'test',
+    title: 'first todo',
     due: new Date(),
-    created_at: new Date()
+    createdAt: new Date()
   }
 ]
 export const todoAtom = atom<Todo[]>(todos)
+
+const projects: Project[] = [
+  {
+    id: 'test',
+    title: 'test project',
+    createdAt: new Date()
+  }
+]
+export const projectAtom = atom<Project[]>(projects)
