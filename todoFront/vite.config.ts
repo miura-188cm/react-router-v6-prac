@@ -6,7 +6,7 @@ export default defineConfig({
   plugins: [react()],
   server: {
     proxy: {
-      '/projects': 'http://localhost:3000',
+      '/projects': 'http://host.docker.internal:3000',
     }
   }
 })
