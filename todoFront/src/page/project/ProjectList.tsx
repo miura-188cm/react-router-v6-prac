@@ -1,14 +1,14 @@
-import { useAtom } from 'jotai'
-import { projectAtom } from '../../state'
-import { lazyLoad } from '../../lazyLoad'
-import { Link } from 'react-router-dom'
+import { Link, useLoaderData } from 'react-router-dom'
 
-export const loader = async () => {
-  return await lazyLoad()
+import { apiFetch } from '../../lib/apiFetch'
+import type { Project } from '../../type'
+
+export const projectLoader = (): Promise<Project[]> => {
+  return apiFetch<Project[]>('/projects')
 }
 
 export default function ProjectList() {
-  const [projects,] = useAtom(projectAtom)
+  const projects = useLoaderData() as Project[];
   return (
     <div>
       {projects.map(p => {
