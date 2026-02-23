@@ -6,6 +6,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import ProjectList, { projectLoader } from './page/project/ProjectList.tsx'
 import Project, { projectLoader as projectByIdLoader } from './page/project/id/Project.tsx'
 import ProjectNotFound from './page/project/id/ProjectNotFound.tsx'
+import { createTodoAction } from './page/project/id/CreateTodo.tsx'
 
 const router = createBrowserRouter([
   {
@@ -23,6 +24,7 @@ const router = createBrowserRouter([
     path: 'project/:projectId',
     element: <Project />,
     loader: projectByIdLoader,
+    action: createTodoAction,
     errorElement: <ProjectNotFound />
   }
 ])

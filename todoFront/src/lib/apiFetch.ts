@@ -29,25 +29,31 @@ await apiFetch('/api/todos', {
 export async function apiFetch<T>(
   path: string,
   init: RequestInit = {}
-): Promise<T> {
-  console.log(`${BASE_URL}${path}`)
-  const res = await fetch(`${BASE_URL}${path}`, {
-    ...init,
-    headers: {
-      'Content-Type': 'application/json',
-      ...(init.headers ?? {})
+): Promise<T | null> {
+
+  try {
+    console.log(`${BASE_URL}${path}`)
+    const res = await fetch(`${BASE_URL}${path}`, {
+      ...init,
+      headers: {
+        'Content-Type': 'application/json',
+        ...(init.headers ?? {})
+      }
+    })
+    const contentType = res.headers.get('content-type') ?? ''
+    const body = contentType.includes('application/json')
+      ? await res.json()
+      : await res.text()
+
+    if (!res.ok) {
+      console.log('error', res.status)
+      console.log('res.ok', res.ok)
+      throw new ApiError(res.status, body)
     }
-  })
-
-  const contentType = res.headers.get('content-type') ?? ''
-  const body = contentType.includes('application/json')
-    ? await res.json()
-    : await res.text()
-
-  if (!res.ok) {
-    throw new ApiError(res.status, body)
+    return body as T
+  } catch (e) {
+    console.log('error', e)
+    return null
   }
-  console.log(body)
-  console.log(res)
-  return body as T
+
 }
