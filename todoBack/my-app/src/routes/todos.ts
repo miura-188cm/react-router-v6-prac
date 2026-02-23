@@ -10,7 +10,7 @@ todos.get('/', async (c) => {
   if (!project) return c.json({ error: 'project not found' }, 404)
   const all = await prisma.todo.findMany({
     where: { projectId },
-    orderBy: { createdAt: 'asc' },
+    orderBy: { createdAt: 'desc' },
   })
   return c.json(all)
 })
@@ -29,7 +29,11 @@ todos.post('/', async (c) => {
   if (isNaN(dueDate.getTime())) {
     return c.json({ error: 'due must be a valid ISO 8601 date string' }, 400)
   }
-  const project = await prisma.project.findUnique({ where: { id: projectId } })
+  const project = await prisma.project.findUnique(
+    {
+      where: { id: projectId },
+    }
+  )
   if (!project) return c.json({ error: 'project not found' }, 404)
   const todo = await prisma.todo.create({
     data: { projectId, title: body.title, due: dueDate },
