@@ -7,6 +7,8 @@ import ProjectList, { projectLoader } from './page/project/ProjectList.tsx'
 import Project, { projectLoader as projectByIdLoader } from './page/project/id/Project.tsx'
 import ProjectNotFound from './page/project/id/ProjectNotFound.tsx'
 import { createTodoAction } from './page/project/id/CreateTodo.tsx'
+import ProjectRedirect, { projectRedirectLoader } from './page/project/projectRedirect/ProjectRedirect.tsx'
+import { createTodoRedirectAction } from './page/project/projectRedirect/CreateTodoRedirect.tsx'
 
 const router = createBrowserRouter([
   {
@@ -25,6 +27,13 @@ const router = createBrowserRouter([
     element: <Project />,
     loader: projectByIdLoader,
     action: createTodoAction,
+    errorElement: <ProjectNotFound />
+  },
+  {
+    path: 'projectRedirect/:projectId',
+    element: <ProjectRedirect />,
+    loader: projectRedirectLoader,
+    action: createTodoRedirectAction,
     errorElement: <ProjectNotFound />
   }
 ])
